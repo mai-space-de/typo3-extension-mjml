@@ -1,0 +1,64 @@
+{
+    "name": "mai-space-de/mjml",
+    "description": "MJML integration for TYPO3 – convert MJML templates to responsive HTML emails using the MJML binary",
+    "type": "typo3-cms-extension",
+    "keywords": [
+        "TYPO3",
+        "extension",
+        "email",
+        "mjml",
+        "responsive"
+    ],
+    "homepage": "https://github.com/mai-space-de/typo3-extension-mjml",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Joel Maximilian Mai",
+            "homepage": "https://mai.space",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "typo3/cms-core": "^13.4 || ^14.0"
+    },
+    "require-dev": {
+        "phpstan/extension-installer": "^1.4",
+        "saschaegerer/phpstan-typo3": "^2.1",
+        "typo3/coding-standards": "^0.8.0",
+        "typo3/testing-framework": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MaiSpaceDe\\Mjml\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MaiSpaceDe\\Mjml\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "mjml",
+            "web-dir": ".Build/web"
+        }
+    },
+    "scripts": {
+        "lint": "php-cs-fixer fix --dry-run --diff",
+        "lint:fix": "php-cs-fixer fix",
+        "stan": "phpstan analyse",
+        "test": "phpunit -c phpunit.xml.dist",
+        "test:coverage": "phpunit -c phpunit.xml.dist --coverage-html .Build/coverage"
+    },
+    "config": {
+        "sort-packages": true,
+        "lock": false,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "vendor-dir": ".Build/vendor"
+    }
+}

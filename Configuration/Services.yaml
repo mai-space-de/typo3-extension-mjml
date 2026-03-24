@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  MaiSpaceDe\Mjml\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Exception/*'
+
+  MaiSpaceDe\Mjml\Service\MjmlService:
+    public: true
+
+  MaiSpaceDe\Mjml\Middleware\MjmlMiddleware:
+    public: true
