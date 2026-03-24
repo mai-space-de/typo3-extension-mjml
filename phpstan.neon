@@ -5,4 +5,3 @@ parameters:
     - Classes
   bootstrapFiles:
     - .Build/vendor/autoload.php
-  checkMissingIterableValueType: false

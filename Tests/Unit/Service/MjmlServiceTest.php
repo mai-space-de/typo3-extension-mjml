@@ -61,12 +61,13 @@ final class MjmlServiceTest extends UnitTestCase
     #[Test]
     public function getBinaryPathReturnsConfiguredValueWhenSet(): void
     {
-        $this->extensionConfigurationMock
+        $extConfigMock = $this->createMock(ExtensionConfiguration::class);
+        $extConfigMock
             ->method('get')
             ->with('mai_mjml')
             ->willReturn(['binaryPath' => '/configured/mjml', 'enableMiddleware' => '0']);
 
-        $service = new MjmlService($this->extensionConfigurationMock);
+        $service = new MjmlService($extConfigMock);
 
         self::assertSame('/configured/mjml', $service->getBinaryPath());
     }
