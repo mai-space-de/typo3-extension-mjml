@@ -1,0 +1,7 @@
+parameters:
+  phpVersion: 80200
+  level: 8
+  paths:
+    - Classes
+  bootstrapFiles:
+    - .Build/vendor/autoload.php
