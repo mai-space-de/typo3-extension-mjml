@@ -13,7 +13,7 @@ Install the extension via Composer:
 
 .. code-block:: bash
 
-    composer require mai-space-de/mjml
+    composer require maispace/mai-mjml
 
 Install the MJML Binary
 =======================
@@ -25,7 +25,7 @@ directory so the exact version shipped with the extension is used:
 .. code-block:: bash
 
     # From the extension root (or from the project root with the correct path)
-    cd vendor/mai-space-de/mjml && npm install
+    cd vendor/maispace/mai-mjml && npm install
 
 Alternatively you can install MJML globally:
 
@@ -45,10 +45,10 @@ or ``composer update``, add the following to your project's
     {
         "scripts": {
             "post-install-cmd": [
-                "cd vendor/mai-space-de/mjml && npm install --omit=dev"
+                "cd vendor/maispace/mai-mjml && npm install --omit=dev"
             ],
             "post-update-cmd": [
-                "cd vendor/mai-space-de/mjml && npm install --omit=dev"
+                "cd vendor/maispace/mai-mjml && npm install --omit=dev"
             ]
         }
     }

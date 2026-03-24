@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MaiSpaceDe\Mjml\Tests\Unit\Service;
+namespace Maispace\MaiMjml\Tests\Unit\Service;
 
-use MaiSpaceDe\Mjml\Exception\MjmlException;
-use MaiSpaceDe\Mjml\Service\MjmlService;
+use Maispace\MaiMjml\Exception\MjmlException;
+use Maispace\MaiMjml\Service\MjmlService;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -63,7 +63,7 @@ final class MjmlServiceTest extends UnitTestCase
     {
         $this->extensionConfigurationMock
             ->method('get')
-            ->with('mjml')
+            ->with('mai_mjml')
             ->willReturn(['binaryPath' => '/configured/mjml', 'enableMiddleware' => '0']);
 
         $service = new MjmlService($this->extensionConfigurationMock);

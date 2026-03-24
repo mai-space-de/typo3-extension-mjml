@@ -1,5 +1,5 @@
 {
-    "name": "mai-space-de/mjml",
+    "name": "maispace/mai-mjml",
     "description": "MJML integration for TYPO3 – convert MJML templates to responsive HTML emails using the MJML binary",
     "type": "typo3-cms-extension",
     "keywords": [
@@ -30,17 +30,17 @@
     },
     "autoload": {
         "psr-4": {
-            "MaiSpaceDe\\Mjml\\": "Classes/"
+            "Maispace\\MaiMjml\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MaiSpaceDe\\Mjml\\Tests\\": "Tests/"
+            "Maispace\\MaiMjml\\Tests\\": "Tests/"
         }
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "mjml",
+            "extension-key": "mai_mjml",
             "web-dir": ".Build/web"
         }
     },

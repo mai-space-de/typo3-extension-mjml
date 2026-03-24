@@ -10,7 +10,7 @@ Extension Configuration
 =======================
 
 The extension can be configured in the TYPO3 backend under
-:guilabel:`Admin Tools > Settings > Extension Configuration > mjml`.
+:guilabel:`Admin Tools > Settings > Extension Configuration > mai_mjml`.
 
 .. confval:: binaryPath
     :type: string

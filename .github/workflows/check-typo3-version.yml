@@ -87,7 +87,7 @@ jobs:
                 '',
                 '### Steps to verify',
                 '',
-                `1. Spin up a TYPO3 ${latest} instance and install EXT:mjml.`,
+                `1. Spin up a TYPO3 ${latest} instance and install EXT:mai_mjml.`,
                 '2. Run the full test suite against this TYPO3 version.',
                 '3. If compatible, update `ext_emconf.php` and `composer.json` if the version is outside the current range.',
                 '4. Update `Documentation/Introduction/Index.rst` supported versions table.',

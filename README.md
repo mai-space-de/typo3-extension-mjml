@@ -1,4 +1,4 @@
-# EXT:mjml – MJML integration for TYPO3
+# EXT:mai_mjml – MJML integration for TYPO3
 
 [![CI](https://github.com/mai-space-de/typo3-extension-mjml/actions/workflows/ci.yml/badge.svg)](https://github.com/mai-space-de/typo3-extension-mjml/actions/workflows/ci.yml)
 
@@ -14,17 +14,17 @@ convert MJML markup into production-ready responsive HTML emails.
 ## Installation
 
 ```bash
-composer require mai-space-de/mjml
+composer require maispace/mai-mjml
 
 # Install the MJML binary
-cd vendor/mai-space-de/mjml && npm install --omit=dev
+cd vendor/maispace/mai-mjml && npm install --omit=dev
 ```
 
 ## Quick Start
 
 ```php
-use MaiSpaceDe\Mjml\Exception\MjmlException;
-use MaiSpaceDe\Mjml\Service\MjmlService;
+use Maispace\MaiMjml\Exception\MjmlException;
+use Maispace\MaiMjml\Service\MjmlService;
 
 final class MyMailer
 {
@@ -43,7 +43,7 @@ final class MyMailer
 
 ## HTTP API (optional)
 
-Enable the middleware in *Extension Manager → MJML → Enable Middleware*, then:
+Enable the middleware in *Extension Manager → MAI MJML → Enable Middleware*, then:
 
 ```bash
 curl -X POST https://example.com/_mjml/convert \

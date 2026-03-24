@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace MaiSpaceDe\Mjml\Tests\Unit\Middleware;
+namespace Maispace\MaiMjml\Tests\Unit\Middleware;
 
-use MaiSpaceDe\Mjml\Exception\MjmlException;
-use MaiSpaceDe\Mjml\Middleware\MjmlMiddleware;
-use MaiSpaceDe\Mjml\Service\MjmlService;
+use Maispace\MaiMjml\Exception\MjmlException;
+use Maispace\MaiMjml\Middleware\MjmlMiddleware;
+use Maispace\MaiMjml\Service\MjmlService;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ResponseFactoryInterface;

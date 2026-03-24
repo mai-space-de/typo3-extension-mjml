@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MaiSpaceDe\Mjml\Exception;
+namespace Maispace\MaiMjml\Exception;
 
 /**
  * Exception thrown when MJML processing fails.

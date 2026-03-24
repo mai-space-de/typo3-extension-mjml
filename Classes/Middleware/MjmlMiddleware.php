@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MaiSpaceDe\Mjml\Middleware;
+namespace Maispace\MaiMjml\Middleware;
 
-use MaiSpaceDe\Mjml\Exception\MjmlException;
-use MaiSpaceDe\Mjml\Service\MjmlService;
+use Maispace\MaiMjml\Exception\MjmlException;
+use Maispace\MaiMjml\Service\MjmlService;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -82,7 +82,7 @@ final class MjmlMiddleware implements MiddlewareInterface
     {
         try {
             /** @var array<string, string> $config */
-            $config = $this->extensionConfiguration->get('mjml');
+            $config = $this->extensionConfiguration->get('mai_mjml');
 
             return !empty($config['enableMiddleware']);
         } catch (\Throwable) {

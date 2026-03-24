@@ -7,10 +7,10 @@ MJML
 ====
 
 :Extension key:
-    mjml
+    mai_mjml
 
 :Package name:
-    mai-space-de/mjml
+    maispace/mai-mjml
 
 :Version:
     |release|

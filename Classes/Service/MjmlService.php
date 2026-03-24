@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MaiSpaceDe\Mjml\Service;
+namespace Maispace\MaiMjml\Service;
 
-use MaiSpaceDe\Mjml\Exception\MjmlException;
+use Maispace\MaiMjml\Exception\MjmlException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -126,7 +126,7 @@ final class MjmlService
         // 1. Extension configuration
         try {
             /** @var array<string, string> $config */
-            $config = $this->extensionConfiguration->get('mjml');
+            $config = $this->extensionConfiguration->get('mai_mjml');
             if (!empty($config['binaryPath'])) {
                 return $config['binaryPath'];
             }
@@ -141,7 +141,7 @@ final class MjmlService
         }
 
         // 3. Local node_modules inside this extension
-        $localBinary = GeneralUtility::getFileAbsFileName('EXT:mjml/node_modules/.bin/mjml');
+        $localBinary = GeneralUtility::getFileAbsFileName('EXT:mai_mjml/node_modules/.bin/mjml');
         if ($localBinary !== '' && file_exists($localBinary)) {
             return $localBinary;
         }

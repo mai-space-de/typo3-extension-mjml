@@ -4,13 +4,13 @@ services:
     autoconfigure: true
     public: false
 
-  MaiSpaceDe\Mjml\:
+  Maispace\MaiMjml\:
     resource: '../Classes/*'
     exclude:
       - '../Classes/Exception/*'
 
-  MaiSpaceDe\Mjml\Service\MjmlService:
+  Maispace\MaiMjml\Service\MjmlService:
     public: true
 
-  MaiSpaceDe\Mjml\Middleware\MjmlMiddleware:
+  Maispace\MaiMjml\Middleware\MjmlMiddleware:
     public: true

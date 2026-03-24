@@ -9,7 +9,7 @@ Introduction
 What Does It Do?
 ================
 
-EXT:mjml integrates the `MJML <https://mjml.io>`_ markup language into TYPO3.
+EXT:mai_mjml integrates the `MJML <https://mjml.io>`_ markup language into TYPO3.
 MJML is a framework that makes writing responsive HTML emails easy.
 Its semantic syntax reduces the amount of hand-written HTML required and
 its rich component library speeds up development while keeping your email

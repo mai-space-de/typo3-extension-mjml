@@ -9,13 +9,13 @@ Usage
 Using MjmlService in PHP
 =========================
 
-Inject ``MaiSpaceDe\Mjml\Service\MjmlService`` into any TYPO3
+Inject ``Maispace\MaiMjml\Service\MjmlService`` into any TYPO3
 controller, service, or command:
 
 .. code-block:: php
 
-    use MaiSpaceDe\Mjml\Exception\MjmlException;
-    use MaiSpaceDe\Mjml\Service\MjmlService;
+    use Maispace\MaiMjml\Exception\MjmlException;
+    use Maispace\MaiMjml\Service\MjmlService;
 
     final class MyMailService
     {

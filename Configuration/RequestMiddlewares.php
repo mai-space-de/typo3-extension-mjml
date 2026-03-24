@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TYPO3 Frontend Request Middlewares for EXT:mjml.
+ * TYPO3 Frontend Request Middlewares for EXT:mai_mjml.
  *
  * The MjmlMiddleware is registered in the frontend stack so that
  * POST /_mjml/convert is reachable on any TYPO3 frontend site.
@@ -10,8 +10,8 @@
  */
 return [
     'frontend' => [
-        'mai-space-de/mjml/mjml-api' => [
-            'target' => \MaiSpaceDe\Mjml\Middleware\MjmlMiddleware::class,
+        'maispace/mai-mjml/mjml-api' => [
+            'target' => \Maispace\MaiMjml\Middleware\MjmlMiddleware::class,
             'before' => [
                 'typo3/cms-frontend/content-length-headers',
             ],
