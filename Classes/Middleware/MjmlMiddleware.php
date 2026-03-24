@@ -51,7 +51,7 @@ final class MjmlMiddleware implements MiddlewareInterface
             return $this->jsonResponse(405, ['error' => 'Method Not Allowed – use POST']);
         }
 
-        $body = (string) $request->getBody();
+        $body = (string)$request->getBody();
         if (trim($body) === '') {
             return $this->jsonResponse(400, ['error' => 'Request body must not be empty']);
         }

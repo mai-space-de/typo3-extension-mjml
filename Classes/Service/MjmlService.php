@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Maispace\MaiMjml\Service;
 
 use Maispace\MaiMjml\Exception\MjmlException;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service for converting MJML markup to HTML using the MJML binary.
@@ -19,7 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *   3. Local node_modules installed inside this extension (node_modules/.bin/mjml)
  *   4. Global `mjml` binary on the system PATH
  */
-final class MjmlService
+class MjmlService
 {
     private readonly string $binaryPath;
 
@@ -39,33 +37,22 @@ final class MjmlService
      */
     public function convert(string $mjmlContent, array $options = []): string
     {
-        $tempInputFile = GeneralUtility::tempnam('mjml_input_', '.mjml');
-        if ($tempInputFile === false || $tempInputFile === '') {
+        $tempInputFile = tempnam(sys_get_temp_dir(), 'mjml_input_');
+        if ($tempInputFile === false) {
             throw new MjmlException('Could not create temporary input file for MJML conversion.', 1711300001);
         }
 
-        GeneralUtility::writeFile($tempInputFile, $mjmlContent, true);
+        $command = [$this->binaryPath, $tempInputFile, '--stdout'];
+        foreach ($options as $key => $value) {
+            $command[] = '--config.' . $key;
+            $command[] = (string)$value;
+        }
+        $process = new Process($command);
 
         try {
-            $command = [$this->binaryPath, $tempInputFile, '--stdout'];
-
-            foreach ($options as $key => $value) {
-                $command[] = '--config.' . $key;
-                $command[] = (string) $value;
-            }
-
-            $process = new Process($command);
+            file_put_contents($tempInputFile, $mjmlContent);
             $process->run();
-
-            if (!$process->isSuccessful()) {
-                throw new MjmlException(
-                    sprintf('MJML conversion failed: %s', trim($process->getErrorOutput())),
-                    1711300002
-                );
-            }
-
-            return $process->getOutput();
-        } catch (ProcessFailedException $e) {
+        } catch (\Throwable $e) {
             throw new MjmlException(
                 sprintf('MJML process could not be started: %s', $e->getMessage()),
                 1711300003,
@@ -76,6 +63,15 @@ final class MjmlService
                 unlink($tempInputFile);
             }
         }
+
+        if (!$process->isSuccessful()) {
+            throw new MjmlException(
+                sprintf('MJML conversion failed: %s', trim($process->getErrorOutput())),
+                1711300002
+            );
+        }
+
+        return $process->getOutput();
     }
 
     /**
@@ -135,14 +131,14 @@ final class MjmlService
         }
 
         // 2. Environment variable
-        $envBinary = (string) getenv('MJML_BINARY');
+        $envBinary = (string)getenv('MJML_BINARY');
         if ($envBinary !== '') {
             return $envBinary;
         }
 
         // 3. Local node_modules inside this extension
-        $localBinary = GeneralUtility::getFileAbsFileName('EXT:mai_mjml/node_modules/.bin/mjml');
-        if ($localBinary !== '' && file_exists($localBinary)) {
+        $localBinary = dirname(__DIR__, 2) . '/node_modules/.bin/mjml';
+        if (file_exists($localBinary)) {
             return $localBinary;
         }
 

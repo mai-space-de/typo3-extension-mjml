@@ -92,6 +92,11 @@ jobs:
       - name: Install Composer dependencies (TYPO3 ${{ matrix.typo3-version }})
         run: |
           composer require --no-update "typo3/cms-core:${{ matrix.typo3-version }}"
+          # saschaegerer/phpstan-typo3 ^2.1 only supports TYPO3 ^13.4; remove it
+          # for the TYPO3 14 matrix (it is only needed for the PHPStan job)
+          if [[ "${{ matrix.typo3-version }}" == "^14.0" ]]; then
+            composer remove --dev --no-update saschaegerer/phpstan-typo3 phpstan/extension-installer
+          fi
           composer install --no-interaction --no-progress
 
       - name: Run unit tests

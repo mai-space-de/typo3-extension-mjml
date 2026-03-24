@@ -1,6 +1,3 @@
-includes:
-  - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
-
 parameters:
   phpVersion: 80200
   level: 8

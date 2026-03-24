@@ -7,6 +7,4 @@ namespace Maispace\MaiMjml\Exception;
 /**
  * Exception thrown when MJML processing fails.
  */
-final class MjmlException extends \RuntimeException
-{
-}
+final class MjmlException extends \RuntimeException {}
