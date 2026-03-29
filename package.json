@@ -1,8 +1,0 @@
-{
-    "name": "typo3-extension-mjml",
-    "description": "MJML binary dependency for TYPO3 MJML extension",
-    "private": true,
-    "dependencies": {
-        "mjml": "4.15.3"
-    }
-}

@@ -1,5 +1,0 @@
-# cat=basic/file/10; type=string; label=Path to the MJML binary (leave empty for auto-detection via node_modules or PATH)
-binaryPath =
-
-# cat=basic/file/20; type=boolean; label=Enable the MJML HTTP API middleware (accessible at /_mjml/convert)
-enableMiddleware = 0

@@ -1,60 +1,40 @@
-# EXT:mai_mjml – MJML integration for TYPO3
+# maispace/mai-mjml — TYPO3 Extension
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-blue)](https://www.php.net/)
+[![TYPO3](https://img.shields.io/badge/TYPO3-13.4%20LTS-orange)](https://typo3.org/)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-[![CI](https://github.com/mai-space-de/typo3-extension-mjml/actions/workflows/ci.yml/badge.svg)](https://github.com/mai-space-de/typo3-extension-mjml/actions/workflows/ci.yml)
+MJML integration for TYPO3. Converts MJML templates to responsive HTML emails by invoking the local MJML CLI binary. Used exclusively as a suggested dependency of `mai_mail` — feature extensions must not depend on this directly.
 
-Integrate the [MJML](https://mjml.io) framework into TYPO3 v13 / v14 to
-convert MJML markup into production-ready responsive HTML emails.
+**Requires:** TYPO3 13.4 LTS / 14.0 · PHP 8.2+
 
-## Requirements
-
-- PHP 8.2+
-- TYPO3 13.4 LTS or 14.x
-- Node.js 18+ and npm (for the MJML binary)
+---
 
 ## Installation
 
 ```bash
 composer require maispace/mai-mjml
-
-# Install the MJML binary
-cd vendor/maispace/mai-mjml && npm install --omit=dev
 ```
 
-## Quick Start
+---
 
-```php
-use Maispace\MaiMjml\Exception\MjmlException;
-use Maispace\MaiMjml\Service\MjmlService;
+## Development
 
-final class MyMailer
-{
-    public function __construct(private readonly MjmlService $mjmlService) {}
-
-    public function render(string $mjml): string
-    {
-        try {
-            return $this->mjmlService->convert($mjml);
-        } catch (MjmlException $e) {
-            // handle error
-        }
-    }
-}
-```
-
-## HTTP API (optional)
-
-Enable the middleware in *Extension Manager → MAI MJML → Enable Middleware*, then:
+### Linting
 
 ```bash
-curl -X POST https://example.com/_mjml/convert \
-     -H "Content-Type: text/plain" \
-     --data '<mjml><mj-body>…</mj-body></mjml>'
+composer lint:check     # Run all linters
+composer lint:fix       # Fix auto-fixable issues
 ```
 
-## Documentation
+### Testing
 
-Full documentation is available in the [`Documentation/`](Documentation/) directory.
+```bash
+composer test           # Run all tests
+composer test:unit      # Run unit tests only
+```
+
+---
 
 ## License
 
-GPL-2.0-or-later – see [LICENSE](LICENSE)
+GPL-2.0-or-later — see [LICENSE](../../LICENSE) for details.
