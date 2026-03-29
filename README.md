@@ -5,7 +5,7 @@
 
 MJML integration for TYPO3. Converts MJML templates to responsive HTML emails by invoking the local MJML CLI binary. Used exclusively as a suggested dependency of `mai_mail` — feature extensions must not depend on this directly.
 
-**Requires:** TYPO3 13.4 LTS / 14.0 · PHP 8.2+
+**Requires:** TYPO3 13.4 LTS / 14.1 · PHP 8.2+
 
 ---
 
