@@ -4,6 +4,3 @@ services:
     autoconfigure: true
     public: false
 
-  Maispace\MaiMjml\:
-    resource: '../Classes/*'
-    exclude: '../Classes/Domain/Model/*'
