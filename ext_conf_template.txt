@@ -1,0 +1,2 @@
+# cat=basic//0010; type=string; label=Binary path (absolute path to the mjml CLI binary, e.g. /usr/local/bin/mjml)
+binaryPath =

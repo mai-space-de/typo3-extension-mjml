@@ -4,3 +4,10 @@ services:
     autoconfigure: true
     public: false
 
+  Maispace\MaiMjml\:
+    resource: '../Classes/*'
+
+  # Map the process runner interface to its concrete implementation so
+  # MjmlRendererService receives a real MjmlProcessRunner when auto-wired.
+  Maispace\MaiMjml\Runner\MjmlProcessRunnerInterface:
+    alias: Maispace\MaiMjml\Runner\MjmlProcessRunner
