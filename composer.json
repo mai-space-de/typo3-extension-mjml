@@ -9,15 +9,6 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../*",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "php": ">=8.5",
         "typo3/cms-core": "^14.1"
