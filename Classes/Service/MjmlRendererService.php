@@ -6,6 +6,7 @@ namespace Maispace\MaiMjml\Service;
 
 use Maispace\MaiMjml\Exception\MjmlRenderException;
 use Maispace\MaiMjml\Runner\MjmlProcessRunnerInterface;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
@@ -27,6 +28,7 @@ final class MjmlRendererService
     public function __construct(
         private readonly MjmlProcessRunnerInterface $processRunner,
         private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly LoggerInterface $logger,
     ) {}
 
     /**
@@ -39,15 +41,31 @@ final class MjmlRendererService
         $binaryPath = $this->getBinaryPath();
 
         if ($binaryPath === '') {
+            $this->logger->error('MJML binary path is not configured');
             throw new MjmlRenderException(
                 'MJML binary path is not configured. Set it in Extension Manager → mai_mjml → Binary path.',
                 self::ERROR_CODE_EMPTY_BINARY_PATH,
             );
         }
 
-        [$exitCode, $output, $errorOutput] = $this->processRunner->run($binaryPath, $mjmlContent);
+        try {
+            [$exitCode, $output, $errorOutput] = $this->processRunner->run($binaryPath, $mjmlContent);
+        } catch (MjmlRenderException $e) {
+            $this->logger->error('MJML process execution failed', [
+                'exception' => $e,
+                'binaryPath' => $binaryPath,
+                'mjmlLength' => strlen($mjmlContent),
+            ]);
+            throw $e;
+        }
 
         if ($exitCode !== 0) {
+            $this->logger->error('MJML rendering failed with non-zero exit code', [
+                'exitCode' => $exitCode,
+                'errorOutput' => $errorOutput,
+                'binaryPath' => $binaryPath,
+                'mjmlLength' => strlen($mjmlContent),
+            ]);
             throw new MjmlRenderException(
                 sprintf('MJML rendering failed (exit code %d): %s', $exitCode, $errorOutput),
                 self::ERROR_CODE_RENDER_FAILED,

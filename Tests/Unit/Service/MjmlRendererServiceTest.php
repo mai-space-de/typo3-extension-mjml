@@ -10,19 +10,26 @@ use Maispace\MaiMjml\Service\MjmlRendererService;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 final class MjmlRendererServiceTest extends TestCase
 {
     private MjmlProcessRunnerInterface&MockObject $processRunner;
     private ExtensionConfiguration&MockObject $extensionConfiguration;
+    private LoggerInterface&MockObject $logger;
     private MjmlRendererService $service;
 
     protected function setUp(): void
     {
         $this->processRunner = $this->createMock(MjmlProcessRunnerInterface::class);
         $this->extensionConfiguration = $this->createMock(ExtensionConfiguration::class);
-        $this->service = new MjmlRendererService($this->processRunner, $this->extensionConfiguration);
+        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->service = new MjmlRendererService(
+            $this->processRunner,
+            $this->extensionConfiguration,
+            $this->logger,
+        );
     }
 
     // ── render() — happy path ─────────────────────────────────────────────────
@@ -177,5 +184,84 @@ final class MjmlRendererServiceTest extends TestCase
             ->willReturn('invalid-string');
 
         self::assertSame('', $this->service->getBinaryPath());
+    }
+
+    // ── Exception boundary logging ──────────────────────────────────────────
+
+    #[Test]
+    public function renderLogsErrorWhenBinaryPathIsEmpty(): void
+    {
+        $this->extensionConfiguration->method('get')
+            ->with('mai_mjml')
+            ->willReturn(['binaryPath' => '']);
+
+        $this->logger->expects(self::once())
+            ->method('error')
+            ->with('MJML binary path is not configured');
+
+        $this->expectException(MjmlRenderException::class);
+
+        $this->service->render('<mjml></mjml>');
+    }
+
+    #[Test]
+    public function renderLogsErrorWhenRunnerReturnsNonZeroExitCode(): void
+    {
+        $this->extensionConfiguration->method('get')
+            ->with('mai_mjml')
+            ->willReturn(['binaryPath' => '/usr/local/bin/mjml']);
+
+        $this->processRunner->method('run')
+            ->willReturn([1, '', 'SyntaxError: Unexpected token']);
+
+        $this->logger->expects(self::once())
+            ->method('error')
+            ->with(
+                'MJML rendering failed with non-zero exit code',
+                self::callback(function (array $context): bool {
+                    return ($context['exitCode'] ?? null) === 1
+                        && ($context['errorOutput'] ?? '') === 'SyntaxError: Unexpected token'
+                        && ($context['binaryPath'] ?? '') === '/usr/local/bin/mjml'
+                        && ($context['mjmlLength'] ?? 0) > 0;
+                }),
+            );
+
+        $this->expectException(MjmlRenderException::class);
+        $this->expectExceptionCode(1748200011);
+
+        $this->service->render('<mjml><invalid></invalid></mjml>');
+    }
+
+    #[Test]
+    public function renderLogsErrorWhenRunnerThrowsException(): void
+    {
+        $this->extensionConfiguration->method('get')
+            ->with('mai_mjml')
+            ->willReturn(['binaryPath' => '/usr/local/bin/mjml']);
+
+        $runnerException = new MjmlRenderException(
+            'MJML process timed out after 60 seconds',
+            1748200002,
+        );
+
+        $this->processRunner->method('run')
+            ->willThrowException($runnerException);
+
+        $this->logger->expects(self::once())
+            ->method('error')
+            ->with(
+                'MJML process execution failed',
+                self::callback(function (array $context) use ($runnerException): bool {
+                    return ($context['exception'] ?? null) === $runnerException
+                        && ($context['binaryPath'] ?? '') === '/usr/local/bin/mjml'
+                        && ($context['mjmlLength'] ?? 0) > 0;
+                }),
+            );
+
+        $this->expectException(MjmlRenderException::class);
+        $this->expectExceptionCode(1748200002);
+        $this->expectExceptionMessage('MJML process timed out after 60 seconds');
+
+        $this->service->render('<mjml></mjml>');
     }
 }
