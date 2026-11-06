@@ -11,3 +11,21 @@ services:
   # MjmlRendererService receives a real MjmlProcessRunner when auto-wired.
   Maispace\MaiMjml\Runner\MjmlProcessRunnerInterface:
     alias: Maispace\MaiMjml\Runner\MjmlProcessRunner
+
+  dashboard.widget.maiMjmlManual:
+    class: 'ProudNerds\PnBackendManual\Widgets\ManualWidget'
+    arguments:
+      $options:
+        file: 'EXT:mai_mjml/Resources/Private/Manual/Manual.md'
+        numbered: true
+        contentsDepth: 2
+        printButton: true
+    tags:
+      - name: dashboard.widget
+        identifier: 'maiMjmlManual'
+        groupNames: 'documentation'
+        title: 'Handbuch: MJML'
+        description: 'Kurze Anleitung für HTML-Mails aus MJML-Vorlagen.'
+        iconIdentifier: 'content-book'
+        height: 'medium'
+        width: 'medium'
